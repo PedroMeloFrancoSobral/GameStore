@@ -19,13 +19,13 @@ export class GamesComponent implements OnInit {
         public dialog: MatDialog){
         this.games$=this.gamesService.list().pipe(
           catchError(error => {
-            this.onError('Erro ao carregar games')
+            this.onError('Erro on loading games')
             return of([])
           })
         );
       }
       ngOnInit(): void {
-      
+
     }
       onError(errorMesage :string) {
         this.dialog.open(ErrorDialogComponent, {

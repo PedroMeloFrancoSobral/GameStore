@@ -20,6 +20,7 @@
             <ng-container matColumnDef="plataform">
               <mat-header-cell *matHeaderCellDef> Plataform </mat-header-cell>
               <mat-cell *matCellDef="let game"> {{game.plataform}}
+                 <mat-icon aria-hidden="false" aria-label="Plataforma" >{{game.plataform | plataform}} </mat-icon>
               </mat-cell>
             </ng-container>
 
