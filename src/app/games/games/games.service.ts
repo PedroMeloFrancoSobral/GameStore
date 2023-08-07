@@ -9,7 +9,7 @@ import { delay, take, tap } from 'rxjs';
 
 export class GamesService {
 
-  private readonly API = '/assets/games.json';
+  private readonly API = '/assets/gsames.json';
 
     constructor(private httpClient: HttpClient) { }
 
@@ -17,7 +17,7 @@ export class GamesService {
         return this.httpClient.get<Game[]>(this.API)
         .pipe(
           take(1),
-          delay(2000),
+          delay(1000),
           tap(games => console.log(games))
         );
        }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from '../model/game';
 import { GamesService } from './games.service';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-games',
@@ -12,11 +14,22 @@ export class GamesComponent implements OnInit {
 
   games$: Observable<Game[]>;
    displayedColumns = ['_id','name','plataform','price']
-
-  constructor (private gamesService: GamesService){
-      this.games$=this.gamesService.list();
-    }
-  ngOnInit(): void {
-
-  }
+   
+  constructor(private gamesService: GamesService,
+        public dialog: MatDialog){
+        this.games$=this.gamesService.list().pipe(
+          catchError(error => {
+            this.onError('Erro ao carregar games')
+            return of([])
+          })
+        );
+      }
+      ngOnInit(): void {
+      
+    }
+      onError(errorMesage :string) {
+        this.dialog.open(ErrorDialogComponent, {
+          data: errorMesage
+        });
+      }
 }
