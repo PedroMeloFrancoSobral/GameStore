@@ -3,6 +3,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "GamestoreSpringApplication",
+      "request": "launch",
+      "mainClass": "com.pedrosobral.gamestorespring.GamestoreSpringApplication",
+      "projectName": "gamestore-spring"
+    },
+    {
       "name": "ng serve",
       "type": "chrome",
       "request": "launch",
