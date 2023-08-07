@@ -9,7 +9,7 @@ import { delay, take, tap } from 'rxjs';
 
 export class GamesService {
 
-  private readonly API = '/assets/games.json';
+  private readonly API = 'api/games';
 
     constructor(private httpClient: HttpClient) { }
 
