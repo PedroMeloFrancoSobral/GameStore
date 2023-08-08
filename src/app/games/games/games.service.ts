@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Game } from '../model/game';
-import { delay, take, tap } from 'rxjs';
+import { delay, first, take, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +21,8 @@ export class GamesService {
           tap(games => console.log(games))
         );
        }
+
+    save(record: Game){
+            return this.httpClient.post<Game>(this.API, record).pipe(first());
+          }
 }
