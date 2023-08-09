@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-games',
@@ -41,16 +42,26 @@ export class GamesComponent implements OnInit {
     this.router.navigate(['edit', game._id], { relativeTo: this.route });
   }
   onDelete(game: Game) {
-    this.gamesService.delete(game._id).subscribe({
-      next: () => {
-        this.refresh();
-        this.snackBar.open('Game removido com sucesso! ', 'X', {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-        });
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: 'tem certeza que quer deletar esse game? ',
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (result: boolean) => {
+        if (result) {
+          this.gamesService.delete(game._id).subscribe({
+            next: () => {
+              this.refresh();
+              this.snackBar.open('Game removido com sucesso! ', 'X', {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+              });
+            },
+            error: () => this.onError('Erro ao tentar remover game'),
+          });
+        }
       },
-      error: () => this.onError('Erro ao tentar remover game'),
     });
   }
 
