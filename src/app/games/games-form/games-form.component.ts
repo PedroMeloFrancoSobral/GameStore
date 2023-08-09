@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GamesService } from '../games/games.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Location } from '@angular/common';
+import { Game } from '../model/game';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-games-form',
   templateUrl: './games-form.component.html',
@@ -10,28 +12,41 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class GamesFormComponent implements OnInit {
 
-   form!: FormGroup;
-   constructor(private formBuilder: FormBuilder,
+     form :FormGroup;
+    constructor(private formBuilder: FormBuilder,
         private service: GamesService,
-        private snackBar: MatSnackBar){
+        private snackBar: MatSnackBar,
+        private location: Location,
+        private route:ActivatedRoute){
+
+      this.form = this.formBuilder.group({
+        name: [null],
+        plataform:[null],
+        price:[null]
+      });
+
     }
-  ngOnInit(): void {
+
+    ngOnInit(): void {
+
+    }
+
+  onSubmit(){
+    if(this.form.valid){
+      this.service.save(this.form.value)
+      .subscribe({next: (result) => {this.onSuccess();},error: () => {this.OnError();}});
+    }else {
+      alert("formulario invalido");
+    }
+
   }
-      onSubmit(){
-        this.service.save(this.form.value)
-        .subscribe(
-         {
-          next: (result) => {
-            console.log(result)
-          },
-          error: () => {
-          this.OnError();
+    onCancel(){
+      this.location.back();
     }
-         }
-        );
-      }
-      onCancel(){
-      }
+    private onSuccess(){
+      this.snackBar.open("Game salvo com sucesso! ",'', {duration:5000});
+      this.location.back();
+    }
       private OnError(){
           this.snackBar.open("Erro ao salvar game! ",'', {duration:5000});
         }
