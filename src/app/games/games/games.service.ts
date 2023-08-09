@@ -41,4 +41,7 @@ export class GamesService {
   private update(record:Partial<Game>){
     return this.httpClient.put<Game>(`${this.API}/${record._id}`, record).pipe(first());
   }
+  delete(id:string){
+    return this.httpClient.delete(`${this.API}/${id}`).pipe(first());
+  }
 }

@@ -13,6 +13,7 @@ export class GamesListComponent implements OnInit {
 
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
+  @Output() delete = new EventEmitter(false);
 
   readonly displayedColumns = ['_id','name','plataform','price','actions'];
 
@@ -26,5 +27,8 @@ export class GamesListComponent implements OnInit {
   }
   onAdd(){
     this.add.emit(true);
+  }
+  onDelete(game: Game){
+    this.delete.emit(game);
   }
 }
