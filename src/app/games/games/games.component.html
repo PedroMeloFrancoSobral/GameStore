@@ -1,15 +1,16 @@
-<mat-toolbar color="primary">GamesStore</mat-toolbar>
 <mat-card>
+<mat-toolbar color="primary">GamesStore</mat-toolbar>
+
   <div class="mat-elevation-z8 column-flex ">
     <mat-card-content>
-        <div *ngIf="games$ | async as games; else loading">
 
           <app-games-list *ngIf="games$ | async as games; else loading"
             [games]= "games"
-            (add)="onAdd()">
+            (add)="onAdd()"
+            (edit)="onEdit($event)"
+            >
         </app-games-list>
 
-        </div>
       </mat-card-content>
 
       <ng-template #loading>

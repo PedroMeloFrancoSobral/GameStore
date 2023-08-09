@@ -9,10 +9,11 @@ import { Game } from '../model/game';
 })
 export class GamesListComponent implements OnInit {
 
-  @Input()
-  games: Game[] = [];
-  @Output()
-  add = new EventEmitter(false);
+  @Input() games: Game[] = [];
+
+  @Output() add = new EventEmitter(false);
+  @Output() edit = new EventEmitter(false);
+
   readonly displayedColumns = ['_id','name','plataform','price','actions'];
 
   constructor (private router:Router,private route: ActivatedRoute) {};
@@ -20,7 +21,9 @@ export class GamesListComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+  onEdit(game: Game){
+    this.edit.emit(game);
+  }
   onAdd(){
     this.add.emit(true);
   }

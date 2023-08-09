@@ -18,18 +18,23 @@ export class GamesFormComponent implements OnInit {
         private snackBar: MatSnackBar,
         private location: Location,
         private route:ActivatedRoute){
-
-      this.form = this.formBuilder.group({
-        name: [null],
-        plataform:[null],
-        price:[null]
-      });
-
+        this.form = this.formBuilder.group({
+            _id:[''],
+            name: [''],
+            plataform:[''],
+            price:[0]
+          });
     }
-
-    ngOnInit(): void {
-
-    }
+    
+      ngOnInit(): void {
+          const game: Game = this.route.snapshot.data['game'];
+          this.form.setValue({
+            _id:game._id,
+            name: game.name,
+            plataform: game.plataform,
+            price:game.price
+          })
+        }
 
   onSubmit(){
     if(this.form.valid){
