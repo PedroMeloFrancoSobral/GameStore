@@ -7,11 +7,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SharedModule } from "../shared/shared.module";
 import { GamesFormComponent } from './games-form/games-form.component';
+import { GamesListComponent } from './games-list/games-list.component';
 
 @NgModule({
     declarations: [
         GamesComponent,
-        GamesFormComponent
+        GamesFormComponent,
+        GamesListComponent
     ],
     imports: [
         CommonModule,

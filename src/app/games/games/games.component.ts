@@ -31,10 +31,9 @@ export class GamesComponent implements OnInit {
 
     }
 
-  onAdd(){
-      this.router.navigate(['new'], { relativeTo: this.route})
-    }
-
+    onAdd(){
+      this.router.navigate(['new'], { relativeTo: this.route})
+    }
       onError(errorMesage :string) {
         this.dialog.open(ErrorDialogComponent, {
           data: errorMesage

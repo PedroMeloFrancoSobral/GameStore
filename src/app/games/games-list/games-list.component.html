@@ -1,0 +1,50 @@
+<mat-table [dataSource]="games" >
+          <!-- Id Column -->
+          <ng-container matColumnDef="_id">
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let game"> {{ game._id }} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let game"> {{game.name}} </mat-cell>
+          </ng-container>
+
+          <!-- Plataform Column -->
+          <ng-container matColumnDef="plataform">
+            <mat-header-cell *matHeaderCellDef> Plataform </mat-header-cell>
+            <mat-cell *matCellDef="let game"> {{game.plataform}}
+              <mat-icon aria-hidden="false" aria-label="Plataforma">{{game.plataform | plataform}} </mat-icon>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+            <mat-cell *matCellDef="let game"> {{game.price}}
+            </mat-cell>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef >
+              <button mat-mini-fab color="accent" aria-label="Add a game" (click)="onAdd()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </mat-header-cell>
+
+            <mat-cell *matCellDef="let game" >
+              <button mat-icon-button color="primary" aria-label="Update a game">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button mat-icon-button color="warning" aria-label="Delete a game">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
