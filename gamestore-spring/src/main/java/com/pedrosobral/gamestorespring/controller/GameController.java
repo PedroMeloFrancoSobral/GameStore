@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pedrosobral.gamestorespring.model.Game;
 import com.pedrosobral.gamestorespring.repository.GameRepository;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -33,18 +36,18 @@ public class GameController {
 
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
-  public Game create(@RequestBody Game game){
+  public Game create(@RequestBody @Valid Game game){
     return gameRepository.save(game);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Game> findById( @PathVariable Long id){
+  public ResponseEntity<Game> findById( @PathVariable @NotNull @Positive Long id){
     return gameRepository.findById(id)
       .map(record -> ResponseEntity.ok().body(record))
       .orElse(ResponseEntity.notFound().build());
   }
   @PutMapping("/{id}")
-  public ResponseEntity<Game> update(@PathVariable Long id, @RequestBody Game game){
+  public ResponseEntity<Game> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Game game){
     return gameRepository.findById(id)
       .map(recordFound -> {
         recordFound.setName(game.getName());
@@ -56,7 +59,7 @@ public class GameController {
     .orElse(ResponseEntity.notFound().build());
   }
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete( @PathVariable Long id){
+  public ResponseEntity<Void> delete( @PathVariable @NotNull @Positive Long id){
     return gameRepository.findById(id).map(recordFound-> {
       gameRepository.deleteById(id);
       return ResponseEntity.noContent().<Void>build();
