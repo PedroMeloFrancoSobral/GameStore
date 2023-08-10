@@ -40,27 +40,22 @@ private final GameService gameService;
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
   public Game create(@RequestBody @Valid Game game){
-     return gameService.create(game);
-   //return ResponseEntity.status(HttpStatus.CREATED).body(gameRepository.save(game));
+    return gameService.create(game);
+  //return ResponseEntity.status(HttpStatus.CREATED).body(gameRepository.save(game));
   }
-  
+
   @GetMapping("/{id}")
-  public ResponseEntity<Game> findById( @PathVariable @NotNull @Positive Long id){
-    return gameService.findById(id)
-     .map(recordFound -> ResponseEntity.ok().body(recordFound))
-     .orElse(ResponseEntity.notFound().build());
+  public Game findById( @PathVariable @NotNull @Positive Long id){
+    return gameService.findById(id);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Game> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Game game){
-  return gameService.update(id, game)
-   .map(recordFound ->ResponseEntity.ok().body(recordFound))
-   .orElse(ResponseEntity.notFound().build());
+  public Game update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Game game){
+    return gameService.update(id, game);
   }
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete( @PathVariable @NotNull @Positive Long id){
-    if (gameService.delete(id)){
-        return ResponseEntity.noContent().<Void>build();
-    } return ResponseEntity.notFound().build();
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  public void delete( @PathVariable @NotNull @Positive Long id){
+    gameService.delete(id);
   }
 }
