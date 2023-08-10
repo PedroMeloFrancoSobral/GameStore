@@ -1,6 +1,8 @@
 package com.pedrosobral.gamestorespring.model;
 
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,6 +21,8 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "games")
+@SQLDelete(sql = "UPDATE Games SET status = 'Inativo' WHERE id= ?")
+@Where(clause = "status= 'Ativo'")
 public class Game {
 
   @Id
@@ -41,6 +45,12 @@ public class Game {
   @NotNull
   @Column(name = "price", length = 200, nullable = false)
   private double price;
+
+  @NotNull
+  @Length(max = 10)
+  @Pattern(regexp = "Ativo|Inativo")
+  @Column(name = "status", length = 10, nullable = false)
+  private String status = "Ativo";
 
 
 }
