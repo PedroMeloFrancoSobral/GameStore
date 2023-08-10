@@ -1,6 +1,8 @@
-package com.pedrosobral.gamestorespring.enums;
+package com.pedrosobral.gamestorespring.enums.converters;
 
 import java.util.stream.Stream;
+
+import com.pedrosobral.gamestorespring.enums.Plataform;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

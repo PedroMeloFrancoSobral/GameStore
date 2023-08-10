@@ -35,6 +35,7 @@ export class GamesService {
     return this.create(record);
     }
   private create(record:Partial<Game>){
+    console.log(record);
     return this.httpClient.post<Game>(this.API, record).pipe(first());
   }
 

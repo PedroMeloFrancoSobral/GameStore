@@ -30,31 +30,29 @@ public class GameService {
 
   public List<GameDTO> listAll(){
     return gameRepository.findAll()
-    .stream()
-    .map(gameMapper::toDTO)
-    .collect(Collectors.toList());
+      .stream()
+      .map(gameMapper::toDTO)
+      .collect(Collectors.toList());
   }
 
   public GameDTO create( @NotNull @Valid GameDTO game){
     return gameMapper.toDTO(gameRepository.save(gameMapper.toEntity(game)));
   }
-
-  public GameDTO findById( @PathVariable @NotNull @Positive Long id){
+  public GameDTO findById( @NotNull @Positive Long id){
     return gameRepository.findById(id).map(gameMapper::toDTO).orElseThrow(()-> new RecordNotFoundException(id));
   }
 
   public GameDTO update( @NotNull @Positive Long id, @Valid GameDTO game){
     return gameRepository.findById(id)
       .map(recordFound -> {
-        recordFound.setName(game.nome());
-        recordFound.setPlataform(game.plataform());
+        recordFound.setName(game.name());
+        recordFound.setPlataform(gameMapper.convertPlataformValue(game.plataform()));
         recordFound.setPrice(game.price());
         return gameRepository.save(recordFound);
     }).map(gameMapper::toDTO).orElseThrow(()-> new RecordNotFoundException(id));
-  }
+}
 
-  public void delete( @PathVariable @NotNull @Positive Long id){
-    gameRepository.delete(gameRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id)));
+  public void delete( @NotNull @Positive Long id){
+      gameRepository.delete(gameRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id)));
   }
-
 }

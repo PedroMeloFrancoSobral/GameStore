@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pedrosobral.gamestorespring.dto.GameDTO;
-import com.pedrosobral.gamestorespring.model.Game;
-import com.pedrosobral.gamestorespring.repository.GameRepository;
 import com.pedrosobral.gamestorespring.service.GameService;
 
 import jakarta.validation.Valid;
@@ -31,7 +29,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class GameController {
 
-private final GameService gameService;
+ private final GameService gameService;
 
   @GetMapping
   public List<GameDTO> listAll(){
@@ -41,8 +39,9 @@ private final GameService gameService;
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
   public GameDTO create(@RequestBody @Valid GameDTO game){
-    return gameService.create(game);
-  //return ResponseEntity.status(HttpStatus.CREATED).body(gameRepository.save(game));
+    System.out.println(game.getClass().getName());
+       return gameService.create(game);
+    //return ResponseEntity.status(HttpStatus.CREATED).body(gameRepository.save(game));
   }
 
   @GetMapping("/{id}")
@@ -51,12 +50,14 @@ private final GameService gameService;
   }
 
   @PutMapping("/{id}")
-  public GameDTO update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid GameDTO game){
-    return gameService.update(id, game);
+  public GameDTO update(@PathVariable @NotNull @Positive Long id, @RequestBody @NotNull @Valid GameDTO game){
+     return gameService.update(id, game);
   }
+
   @DeleteMapping("/{id}")
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   public void delete( @PathVariable @NotNull @Positive Long id){
     gameService.delete(id);
   }
 }
+

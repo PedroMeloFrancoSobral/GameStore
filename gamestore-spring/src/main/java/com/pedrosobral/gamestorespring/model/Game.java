@@ -7,7 +7,9 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pedrosobral.gamestorespring.enums.Plataform;
-import com.pedrosobral.gamestorespring.enums.PlataformConverter;
+import com.pedrosobral.gamestorespring.enums.Status;
+import com.pedrosobral.gamestorespring.enums.converters.PlataformConverter;
+import com.pedrosobral.gamestorespring.enums.converters.StatusConverter;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -18,12 +20,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "games")
+@Table (name = "Games")
 @SQLDelete(sql = "UPDATE Games SET status = 'Inativo' WHERE id= ?")
 @Where(clause = "status= 'Ativo'")
 public class Game {
@@ -40,8 +41,10 @@ public class Game {
   private String name;
 
   @NotNull
+  //@Length(max = 10)
+  //@Pattern(regexp = "PS4|XBOX")
   @Convert(converter = PlataformConverter.class)
-  @Column(name = "plataform", nullable = false)
+  @Column(name = "plataform",  nullable = false)
   private Plataform plataform;
 
   @NotNull
@@ -50,9 +53,9 @@ public class Game {
 
   @NotNull
   @Length(max = 10)
-  @Pattern(regexp = "Ativo|Inativo")
-  @Column(name = "status", length = 10, nullable = false)
-  private String status = "Ativo";
+  @Convert(converter = StatusConverter.class)
+  @Column(name = "status", nullable = false)
+  private Status status = Status.ACTIVE;
 
 
 }
