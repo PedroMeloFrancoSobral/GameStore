@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.pedrosobral.gamestorespring.enums.Plataform;
 import com.pedrosobral.gamestorespring.model.Game;
 import com.pedrosobral.gamestorespring.repository.GameRepository;
 
@@ -23,7 +24,7 @@ public class GamestoreSpringApplication {
       gameRepository.deleteAll();
       Game game1 = new Game();
       game1.setName("teste");
-      game1.setPlataform("PS4");
+      game1.setPlataform(Plataform.PS4);
       game1.setPrice(100.00);
       gameRepository.save(game1);
     };

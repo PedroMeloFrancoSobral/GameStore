@@ -6,8 +6,11 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pedrosobral.gamestorespring.enums.Plataform;
+import com.pedrosobral.gamestorespring.enums.PlataformConverter;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,10 +40,9 @@ public class Game {
   private String name;
 
   @NotNull
-  @Length(max = 10)
-  @Pattern(regexp = "PS4|XBOX")
-  @Column(name = "plataform", length = 10, nullable = false)
-  private String plataform;
+  @Convert(converter = PlataformConverter.class)
+  @Column(name = "plataform", nullable = false)
+  private Plataform plataform;
 
   @NotNull
   @Column(name = "price", length = 200, nullable = false)

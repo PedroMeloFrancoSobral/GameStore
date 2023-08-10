@@ -1,14 +1,15 @@
 package com.pedrosobral.gamestorespring.service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.pedrosobral.gamestorespring.dto.GameDTO;
+import com.pedrosobral.gamestorespring.dto.mapper.GameMapper;
 import com.pedrosobral.gamestorespring.exceptions.RecordNotFoundException;
-import com.pedrosobral.gamestorespring.model.Game;
 import com.pedrosobral.gamestorespring.repository.GameRepository;
 
 import jakarta.validation.Valid;
@@ -19,35 +20,41 @@ import jakarta.validation.constraints.Positive;
 @Service
 public class GameService {
 
-private final GameRepository gameRepository;
+  private final GameRepository gameRepository;
+  private final GameMapper gameMapper;
 
-  public GameService(GameRepository gameRepository) {
+  public GameService(GameRepository gameRepository,GameMapper gameMapper) {
     this.gameRepository = gameRepository;
+    this.gameMapper=gameMapper;
   }
 
-  public List<Game> listAll(){
-    return gameRepository.findAll();
+  public List<GameDTO> listAll(){
+    return gameRepository.findAll()
+    .stream()
+    .map(gameMapper::toDTO)
+    .collect(Collectors.toList());
   }
 
-  public Game create( @Valid Game game){
-    return gameRepository.save(game);
+  public GameDTO create( @NotNull @Valid GameDTO game){
+    return gameMapper.toDTO(gameRepository.save(gameMapper.toEntity(game)));
   }
 
-  public Game findById( @PathVariable @NotNull @Positive Long id){
-    return gameRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id));
+  public GameDTO findById( @PathVariable @NotNull @Positive Long id){
+    return gameRepository.findById(id).map(gameMapper::toDTO).orElseThrow(()-> new RecordNotFoundException(id));
   }
 
-  public Game update( @NotNull @Positive Long id, @Valid Game game){
+  public GameDTO update( @NotNull @Positive Long id, @Valid GameDTO game){
     return gameRepository.findById(id)
       .map(recordFound -> {
-        recordFound.setName(game.getName());
-        recordFound.setPlataform(game.getPlataform());
-        recordFound.setPrice(game.getPrice());
+        recordFound.setName(game.nome());
+        recordFound.setPlataform(game.plataform());
+        recordFound.setPrice(game.price());
         return gameRepository.save(recordFound);
-    }).orElseThrow(()-> new RecordNotFoundException(id));
+    }).map(gameMapper::toDTO).orElseThrow(()-> new RecordNotFoundException(id));
   }
 
   public void delete( @PathVariable @NotNull @Positive Long id){
     gameRepository.delete(gameRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id)));
   }
+
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pedrosobral.gamestorespring.dto.GameDTO;
 import com.pedrosobral.gamestorespring.model.Game;
 import com.pedrosobral.gamestorespring.repository.GameRepository;
 import com.pedrosobral.gamestorespring.service.GameService;
@@ -33,24 +34,24 @@ public class GameController {
 private final GameService gameService;
 
   @GetMapping
-  public List<Game> listAll(){
+  public List<GameDTO> listAll(){
     return gameService.listAll();
   }
 
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
-  public Game create(@RequestBody @Valid Game game){
+  public GameDTO create(@RequestBody @Valid GameDTO game){
     return gameService.create(game);
   //return ResponseEntity.status(HttpStatus.CREATED).body(gameRepository.save(game));
   }
 
   @GetMapping("/{id}")
-  public Game findById( @PathVariable @NotNull @Positive Long id){
+  public GameDTO findById( @PathVariable @NotNull @Positive Long id){
     return gameService.findById(id);
   }
 
   @PutMapping("/{id}")
-  public Game update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Game game){
+  public GameDTO update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid GameDTO game){
     return gameService.update(id, game);
   }
   @DeleteMapping("/{id}")
