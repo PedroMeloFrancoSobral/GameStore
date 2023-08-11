@@ -12,7 +12,7 @@ public class GameMapper {
     if(game == null){
       return null;
     }
-    return new GameDTO(game.getId(),game.getName(),game.getPlataform().getValue(),game.getPrice());
+    return new GameDTO(game.getId(),game.getName(),game.getPlataform().getValue(),game.getPrice(),game.getSummary());
   }
 
   public Game toEntity(GameDTO gameDTO){
@@ -25,7 +25,7 @@ public class GameMapper {
     }
     game.setName(gameDTO.name());
     game.setPlataform(convertPlataformValue(gameDTO.plataform()));
-
+    game.setSummary(gameDTO.summary());
     game.setPrice(gameDTO.price());
     return game;
   }

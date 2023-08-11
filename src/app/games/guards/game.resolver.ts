@@ -8,5 +8,5 @@ export function gameResolver(route: ActivatedRouteSnapshot, state: RouterStateSn
     if (route.params && route.params['id']) {
       return inject(GamesService).loadById(route.params['id']);
     }
-    return of({_id: '', name: '', plataform:'',price: 0});
+    return of({_id: '', name: '', plataform:'',price: 0,summary:''});
   }

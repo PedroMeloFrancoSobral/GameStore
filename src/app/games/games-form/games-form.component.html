@@ -19,6 +19,12 @@
                 <mat-error *ngIf="form.get('plataform')?.invalid">{{getErrorMessage("plataform")}}</mat-error>
               </mat-form-field>
 
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Summary" formControlName="summary" #summary/>
+          <mat-hint align="end">{{summary.value.length}}/100</mat-hint>
+          <mat-error *ngIf="form.get('summary')?.invalid">{{getErrorMessage("summary")}}</mat-error>
+        </mat-form-field>
+
               <mat-form-field class="full-width">
                 <input matInput placeholder="Price" formControlName="price" >
                 <mat-error *ngIf="form.get('price')?.invalid">{{getErrorMessage("price")}}</mat-error>

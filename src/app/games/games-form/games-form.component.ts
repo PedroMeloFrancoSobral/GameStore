@@ -23,6 +23,9 @@ export class GamesFormComponent implements OnInit {
             name: ['',[Validators.required,
               Validators.minLength(5),
               Validators.maxLength(100)]],
+        summary: ['',[Validators.required,
+                Validators.minLength(5),
+                Validators.maxLength(100)]],
             plataform:['',[Validators.required]],
             price:[0,[Validators.required,Validators.min(1)]]
           });
@@ -33,6 +36,7 @@ export class GamesFormComponent implements OnInit {
           this.form.setValue({
             _id:game._id,
             name: game.name,
+            summary:game.summary,
             plataform: game.plataform,
             price:game.price
           })
@@ -54,26 +58,26 @@ export class GamesFormComponent implements OnInit {
       this.snackBar.open("Game salvo com sucesso! ",'', {duration:5000});
       this.location.back();
     }
+    public getErrorMessage(fieldName:string){
+          const field = this.form.get(fieldName);
+          if(field?.hasError('required')){
+            return 'Campo obrigatório'
+          }
+          if(field?.hasError('minlength')){
+            const requiredLength= field.errors? field.errors['minlength']['requiredLength']: 5
+            return `Minimo de ${requiredLength} caracteres`;
+          }
+
+          if(field?.hasError('min')){
+            const requiredMin= field.errors? field.errors['min'] ['min']: 1
+            return `Minimo de valor tem que ser ${requiredMin}`;
+          }
+          return 'Campo invalido'
+        }
       private OnError(){
           this.snackBar.open("Erro ao salvar game! ",'', {duration:5000});
         }
-      public getErrorMessage(fieldName:string){
-            const field = this.form.get(fieldName);
-            if(field?.hasError('required')){
-              return 'Campo obrigatório'
-            }
 
-            if(field?.hasError('minlength')){
-              const requiredLength= field.errors? field.errors['minlength']['requiredLength']: 5
-              return `Minimo de ${requiredLength} caracteres`;
-            }
-
-            if(field?.hasError('min')){
-              const requiredMin= field.errors? field.errors['min'] ['min']: 1
-              return `Minimo de valor tem que ser ${requiredMin}`;
-            }
-            return 'Campo invalido'
-          }
 
 
   }

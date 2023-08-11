@@ -1,5 +1,10 @@
-<mat-card>
 <mat-toolbar color="primary">GamesStore</mat-toolbar>
+<mat-card>
+<mat-toolbar color="primary">Games
+  <button mat-mini-fab color="accent" aria-label="Add a game" (click)="onAdd()" class="add-button">
+    <mat-icon >add</mat-icon>
+  </button>
+</mat-toolbar>
 
   <div class="mat-elevation-z8 column-flex ">
     <mat-card-content>

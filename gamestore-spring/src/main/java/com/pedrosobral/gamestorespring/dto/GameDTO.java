@@ -11,7 +11,8 @@ public record GameDTO(
 @JsonProperty ("_id") Long id,
 @NotBlank @NotNull @Length(min = 5, max = 100)String name,
 @NotNull @Length(max = 10) @Pattern(regexp = "PS4|XBOX")String plataform,
-@NotNull double price) {
+@NotNull double price,
+@NotBlank @NotNull @Length(min = 5, max = 250)String summary) {
 
 }
 

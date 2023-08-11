@@ -25,6 +25,7 @@ public class GamestoreSpringApplication {
       Game game1 = new Game();
       game1.setName("teste");
       game1.setPlataform(Plataform.PS4);
+      game1.setSummary("Testando o resumo");
       game1.setPrice(100.00);
       gameRepository.save(game1);
     };

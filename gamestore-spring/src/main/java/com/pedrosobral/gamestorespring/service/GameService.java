@@ -48,6 +48,7 @@ public class GameService {
         recordFound.setName(game.name());
         recordFound.setPlataform(gameMapper.convertPlataformValue(game.plataform()));
         recordFound.setPrice(game.price());
+        recordFound.setSummary(game.summary());
         return gameRepository.save(recordFound);
     }).map(gameMapper::toDTO).orElseThrow(()-> new RecordNotFoundException(id));
 }

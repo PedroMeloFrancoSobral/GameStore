@@ -40,6 +40,12 @@ public class Game {
   @Column(name = "name", length = 100, nullable = false)
   private String name;
 
+  @NotBlank
+  @NotNull
+  @Length(min = 5, max = 250)
+  @Column(name = "summary", length = 250, nullable = false)
+  private String summary;
+
   @NotNull
   //@Length(max = 10)
   //@Pattern(regexp = "PS4|XBOX")
